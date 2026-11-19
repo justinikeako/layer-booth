@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layer Booth – vocal layering</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header><h1>Layer Booth</h1><div class="status" id="status"></div></header>
+
+<section class="beatbox" id="beatbox">
+  <div class="lbl" id="lbl">Ready</div>
+  <div class="big" id="big">♪</div>
+  <div class="dots" id="dots"></div>
+  <div class="pos" id="pos"></div>
+  <div class="prog"><div></div></div>
+</section>
+
+<div class="transport">
+  <button id="recBtn">● Record layer</button>
+  <button id="playBtn">▶ Play</button>
+</div>
+
+<div id="tracks"></div>
+<p class="empty" id="empty">No layers yet. Set your tempo below, then hit <b>Record layer</b>. You'll get a count-in, then sing for the length of the loop. Each new take plays the earlier ones back so you can stack harmonies.</p>
+
+<details open id="tempoSec"><summary>Tempo &amp; length</summary><div class="sec">
+  <div class="field"><span>Tempo (BPM)</span>
+    <div class="bpm"><button id="bpmDown">−</button><input type="number" id="bpm" min="30" max="260"><button id="bpmUp">+</button><button id="tap">Tap</button></div></div>
+  <div class="field"><span>Beats per bar</span><select id="beats"></select></div>
+  <div class="field"><span>Loop length (bars)</span><input type="number" id="bars" min="1" max="64"></div>
+  <div class="field"><span>Count-in</span><select id="countIn"><option value="0">None</option><option value="1">1 bar</option><option value="2">2 bars</option></select></div>
+  <div class="field"><span>Loop playback</span><input type="checkbox" id="loop"></div>
+  <div class="warn" id="lockNote" hidden>Tempo and length are locked while you have layers, so everything stays lined up. Use <b>New session</b> at the bottom to change them.</div>
+</div></details>
+
+<details><summary>Metronome</summary><div class="sec">
+  <div class="field"><span>Click volume</span><input type="range" id="clickVol" min="0" max="1" step="0.05"></div>
+  <div class="field"><span>Click during playback</span><input type="checkbox" id="clickOnPlay"></div>
+  <div class="field"><span>Click while recording</span>
+    <select id="recClick"><option value="visual">Off – flash only</option><option value="quiet">Quiet click</option><option value="normal">Normal click</option></select></div>
+  <div class="field"><span>Vibrate on beat (Android)</span><input type="checkbox" id="vibrate"></div>
+  <div class="note">The count-in always clicks out loud. After that, the screen flashes and counts the beats. With the click off while recording, your takes stay clean, because there are no headphones to keep the click out of the mic.</div>
+</div></details>
+
+<details><summary>Recording without headphones</summary><div class="sec">
+  <div class="field"><span>Hear earlier layers while recording</span><input type="checkbox" id="hearLayers"></div>
+  <div class="field"><span>Their volume while recording</span><input type="range" id="guideVol" min="0" max="1" step="0.05"></div>
+  <div class="field"><span>Echo cancellation</span><input type="checkbox" id="echo"></div>
+  <div class="note"><b>Tips:</b> Keep the guide layers fairly quiet and sing close to the phone's mic (usually the bottom edge). Echo cancellation filters out some of what the speaker plays, which keeps takes cleaner, but it can make your voice sound a little thinner. If the layers stack up into mush, turn off <i>Hear earlier layers</i> and use the starting pitch plus the visual beat instead.</div>
+  <div class="note"><b>iPhone:</b> if you can't hear anything, flip off the silent switch and turn the volume up.</div>
+</div></details>
+
+<details><summary>Starting pitch</summary><div class="sec">
+  <div class="field"><span>Note</span><div class="bpm"><select id="note"></select><select id="oct"></select><button id="playNote">Play</button></div></div>
+  <div class="field"><span>Play it during the count-in</span><input type="checkbox" id="refCountIn"></div>
+</div></details>
+
+<details id="calSec"><summary>Timing calibration</summary><div class="sec">
+  <div class="note">Phones add a small delay between the speaker and the mic, which can make takes land a little late. Calibrate once: set the phone on a table in a quiet room, turn the volume up, and tap the button. It plays 10 clicks and listens for them.</div>
+  <div class="field"><span>Delay correction</span><div class="bpm"><input type="number" id="latMs" min="0" max="600"><span class="note">ms</span></div></div>
+  <div class="note" id="latInfo"></div>
+  <button id="calBtn">Calibrate now</button>
+  <div class="note">Still a bit off? Each layer also has its own <b>Timing</b> nudge under ⋯.</div>
+</div></details>
+
+<details><summary>Export &amp; session</summary><div class="sec">
+  <button id="exportBtn">Export mix as WAV</button>
+  <div class="note" id="exportInfo"></div>
+  <button id="newBtn" class="danger">New session (delete all layers)</button>
+  <div class="note">Layers live only in this page until you export them. Reloading the page clears them.</div>
+</div></details>
+</div>
+
+<script src="a1.js"></script>
+<script src="a2.js"></script>
+<script src="a3.js"></script>
+<script src="a4.js"></script>
+<script src="a5.js"></script>
+
+</body>
+</html>
